@@ -27,7 +27,6 @@ class App extends Component {
     base.removeBinding(this.ref);
   }
   componentDidUpdate() {
-    console.log("UPDATED");
     localStorage.setItem(
       this.props.match.params.storeId,
       JSON.stringify(this.state.order)
@@ -38,6 +37,9 @@ class App extends Component {
     const fishes = { ...this.state.fishes };
     fishes[`fish${Date.now()}`] = fish;
     this.setState({ fishes });
+  };
+  updateFish = (key, updatedFish) => {
+    this.setState({ fishes: { ...this.state.fishes, [key]: updatedFish } });
   };
   loadSampleFishes = () => {
     this.setState({ fishes: sampleFishes });
@@ -65,7 +67,9 @@ class App extends Component {
         </div>
         <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory
+          fishes={this.state.fishes}
           addFish={this.addFish}
+          updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
         />
       </div>
