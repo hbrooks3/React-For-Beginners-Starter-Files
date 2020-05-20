@@ -4,8 +4,11 @@ import { formatPrice } from "../helpers";
 class Order extends Component {
   renderOrder = (key) => {
     const fish = this.props.fishes[key];
+    if (!fish) {
+      return null;
+    }
     const count = this.props.order[key];
-    const available = fish && fish.status === "available";
+    const available = fish.status === "available";
     if (!available) {
       return (
         <li key={key}>
@@ -23,12 +26,12 @@ class Order extends Component {
   render() {
     const { order, fishes } = this.props;
     const orderIds = Object.keys(order);
-    const total = orderIds.reduce(
-      (total, key) =>
-        total +
-        order[key] * fishes[key].price * (fishes[key].status === "available"),
-      0
-    );
+    const total = orderIds.reduce((total, key) => {
+      const fish = fishes[key];
+      const amount = order[key];
+      const isAvailable = fish && fish.status === "available";
+      return total + (isAvailable ? fish.price * amount : 0);
+    }, 0);
     return (
       <div className="order-wrap">
         <h2>Order</h2>
