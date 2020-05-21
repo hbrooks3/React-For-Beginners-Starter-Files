@@ -1,11 +1,17 @@
 import React, { Component, createRef } from "react";
+import PropTypes from "prop-types";
 
 class AddFishForm extends Component {
+  static propTypes = {
+    addFish: PropTypes.func.isRequired,
+  };
+
   nameRef = createRef();
   priceRef = createRef();
   statusRef = createRef();
   descRef = createRef();
   imageRef = createRef();
+
   createFish = (event) => {
     event.preventDefault();
     const fish = {
@@ -18,22 +24,36 @@ class AddFishForm extends Component {
     this.props.addFish(fish);
     event.currentTarget.reset();
   };
+
   render() {
     return (
       <form className="fish-edit" onSubmit={this.createFish}>
-        <input name="name" ref={this.nameRef} type="text" placeholder="Name" />
         <input
+          required
+          name="name"
+          ref={this.nameRef}
+          type="text"
+          placeholder="Name"
+        />
+        <input
+          required
           name="price"
           ref={this.priceRef}
           type="text"
           placeholder="Price"
         />
-        <select name="status" ref={this.statusRef}>
+        <select required name="status" ref={this.statusRef}>
           <option value="available">Fresh!</option>
           <option value="unavailable">Sold Out!</option>
         </select>
-        <textarea name="desc" ref={this.descRef} placeholder="Description" />
+        <textarea
+          required
+          name="desc"
+          ref={this.descRef}
+          placeholder="Description"
+        />
         <input
+          required
           name="image"
           ref={this.imageRef}
           type="text"

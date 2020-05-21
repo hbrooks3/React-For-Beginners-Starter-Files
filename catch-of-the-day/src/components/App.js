@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import Header from "./Header";
 import Inventory from "./Inventory";
 import Order from "./Order";
@@ -7,6 +9,10 @@ import Fish from "./Fish";
 import base from "../base";
 
 class App extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+  };
+
   state = {
     fishes: {},
     order: {},
@@ -34,19 +40,18 @@ class App extends Component {
   }
 
   addFish = (fish) => {
-    const fishes = { ...this.state.fishes };
-    fishes[`fish${Date.now()}`] = fish;
-    this.setState({ fishes });
+    this.updateFish(`fish${Date.now()}`)(fish);
   };
-  updateFish = (key, updatedFish) => {
+  updateFish = (key) => (updatedFish) => {
     this.setState({ fishes: { ...this.state.fishes, [key]: updatedFish } });
   };
-  deleteFish = (key) => {
-    this.updateFish(key, null);
+  deleteFish = (key) => () => {
+    this.updateFish(key)(null);
   };
   loadSampleFishes = () => {
     this.setState({ fishes: sampleFishes });
   };
+
   addToOrder = (key) => () => {
     const order = { ...this.state.order };
     order[key] = order[key] + 1 || 1;
