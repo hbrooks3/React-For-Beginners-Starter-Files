@@ -35,6 +35,9 @@ class EditFishForm extends Component {
           onChange={this.handleChange}
           type="text"
         />
+        <button onClick={() => this.props.deleteFish(this.props.id)}>
+          Remove Fish
+        </button>
       </div>
     );
   }
