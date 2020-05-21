@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import Header from "./Header";
 import Inventory from "./Inventory";
 import Order from "./Order";
-import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
+
 import base from "../base";
+import sampleFishes from "../sample-fishes";
 
 class App extends Component {
   static propTypes = {
@@ -89,6 +90,7 @@ class App extends Component {
           updateFish={this.updateFish}
           deleteFish={this.deleteFish}
           loadSampleFishes={this.loadSampleFishes}
+          storeId={this.props.match.params.storeId}
         />
       </div>
     );
